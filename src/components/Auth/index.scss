@@ -1,0 +1,32 @@
+.login, .signup {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #072643c6;
+  .ant-card {
+    width: 60%;
+    border-radius: 20px;
+    box-shadow: 4px 6px 10px #072643;
+    form {
+      display: flex;
+      flex-direction: column;
+      input {
+        border: none;
+        border-bottom: 2px solid rgb(177, 178, 178);
+        &:focus, &:hover {
+          outline: none;
+        }
+      }
+      button {
+        background-color: #072643;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+      a {
+        color: #409ff7;
+      }
+    }
+  }
+}
