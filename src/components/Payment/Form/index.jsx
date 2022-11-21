@@ -77,7 +77,7 @@ const FormLayout = ({ isLoan = false }) => {
     <Form layout="vertical">
       <Form.Item
         label="Amount"
-        name="requiredMarkValue"
+        required
         rules={[
           {
             required: true,
@@ -97,7 +97,7 @@ const FormLayout = ({ isLoan = false }) => {
       {isLoan && (
         <Form.Item
           label="Repayment Days"
-          name="requiredMarkValue"
+          required
           rules={[
             {
               required: true,
