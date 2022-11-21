@@ -1,61 +1,51 @@
-import React, { useState } from "react";
-import { Button, Card, Form, Input } from "antd";
+import React, { useEffect } from "react";
+import { Card, notification } from "antd";
+import { useNavigate } from "react-router-dom";
+import GoogleLogin from "react-google-login";
+import { gapi } from "gapi-script";
 import "./index.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { DISCOVERY_DOCS, SCOPES } from "../../constant/gapi";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { value, name } = e?.target;
-    setData({ ...data, [name]: value });
+  const onSuccess = (response) => {
+    localStorage.setItem("access_token", response.accessToken);
+    localStorage.setItem("current_user", response.profileObj.name);
+    localStorage.setItem("current_user_email", response.profileObj.email);
+    // createSheet({ user: response.wt.Ad, token: response.accessToken });
+
+    return navigate("/");
   };
-  const handleSubmit = () => {
-    console.log(data);
-    setLoading(true);
 
-    setTimeout(() => {
-      setLoading(false);
-
-      return navigate("/");
-    }, 1000);
+  const onFailure = (response) => {
+    notification.error({
+      message: "Google Login",
+      description: response.error.replace(/_/g, " "),
+    });
   };
+
+  useEffect(() => {
+    const startGapi = () => {
+      gapi.client.init({
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        discoveryDocs: [DISCOVERY_DOCS],
+        scope: SCOPES.join(" "),
+      });
+    };
+    gapi.load("client:auth2", startGapi);
+  }, []);
+
   return (
     <div className="login">
       <Card>
-        <Form>
-          <Form.Item>
-            <Input
-              name="email"
-              type="email"
-              placeholder="Email"
-              onChange={handleChange}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Input
-              name="password"
-              type="password"
-              placeholder="Password"
-              onChange={handleChange}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button
-              htmlType="submit"
-              type="primary"
-              onClick={handleSubmit}
-              loading={loading}
-            >
-              Login
-            </Button>
-          </Form.Item>
-          <p>
-            Don't have an account? <Link to="/signup">Sign up</Link>{" "}
-          </p>
-        </Form>
+        <h2>Login</h2>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_CLIENT_ID}
+          buttonText="Connect with Google"
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+        />
       </Card>
     </div>
   );

@@ -1,31 +1,30 @@
-.login, .signup {
+.login {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #072643c6;
   .ant-card {
-    width: 60%;
     border-radius: 20px;
-    box-shadow: 4px 6px 10px #072643;
-    form {
+    box-shadow: 4px 6px 10px #07264380;
+    display: flex;
+    justify-content: center;
+    .ant-card-body {
+      width: 100%;
       display: flex;
       flex-direction: column;
-      input {
-        border: none;
-        border-bottom: 2px solid rgb(177, 178, 178);
-        &:focus, &:hover {
-          outline: none;
-        }
+      h2 {
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
       }
       button {
-        background-color: #072643;
-        border: none;
-        border-radius: 4px;
-        font-weight: bold;
-      }
-      a {
-        color: #409ff7;
+        display: flex;
+        justify-content: center;
+        span {
+          font-size: 18px;
+          font-weight: 700;
+        }
       }
     }
   }

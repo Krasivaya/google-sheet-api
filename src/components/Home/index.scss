@@ -12,15 +12,34 @@
   }
 }
 
-.logo {
-  height: 32px;
-  margin: 16px;
-  color: #fff;
-  font-weight: bolder;
-  font-size: 26px;
-  text-align: center;
+.logo-space{
+  margin: 20px;
+  margin-left: 30px;
+  img {
+    border-radius: 50px;
+  }
+  h1 {
+    height: 32px;
+    color: #fff;
+    font-weight: bolder;
+    font-size: 26px;
+  }
+  h2{
+    margin: 0;
+    color: #fff;
+  }
+  span{
+    color: rgb(94, 94, 94);
+  }
 }
 
 .site-layout-background{
   background: #fff;
+}
+
+.ant-layout-sider {
+  min-width: 255px !important;
+}
+.ant-layout-sider-collapsed {
+  min-width: 80px !important ;
 }

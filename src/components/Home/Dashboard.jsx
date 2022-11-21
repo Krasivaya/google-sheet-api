@@ -1,5 +1,5 @@
 import React, { createElement, useState } from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Avatar } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import "./index.scss";
 import navItems from "../../utilities/navItems";
@@ -10,9 +10,14 @@ const { Content, Header, Sider } = Layout;
 const Dashboard = ({ childern }) => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const currentUser = localStorage.getItem("current_user");
+  const currentUserEmail = localStorage.getItem("current_user_email");
 
   const onMenuChange = ({ key }) => {
     if (key === "logout") {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("current_user");
+      localStorage.removeItem("current_user_email");
       return navigate(`/login`);
     }
     return navigate(`/${key}`);
@@ -22,9 +27,37 @@ const Dashboard = ({ childern }) => {
     <Layout className="dashboard">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         {collapsed ? (
-          <div className="logo">C</div>
+          <div className="logo-space">
+            {currentUser ? (
+              <Avatar
+                style={{
+                  backgroundColor: "#f56a00",
+                  verticalAlign: "middle",
+                }}
+              >
+                {currentUser.slice(0, 1).toUpperCase()}
+              </Avatar>
+            ) : (
+              <h1>C</h1>
+            )}
+          </div>
         ) : (
-          <div className="logo">Campus App</div>
+          <div className="logo-space">
+            {currentUser ? (
+              <Avatar
+                style={{
+                  backgroundColor: "#f56a00",
+                  verticalAlign: "middle",
+                }}
+              >
+                {currentUser.slice(0, 1).toUpperCase()}
+              </Avatar>
+            ) : (
+              <h1>Campus App</h1>
+            )}
+            <h2>{currentUser}</h2>
+            <span>@{currentUserEmail || "campus"}</span>
+          </div>
         )}
 
         <Menu

@@ -1,11 +1,15 @@
 import { Button, Form, Input, InputNumber, notification } from "antd";
+import moment from "moment";
 import React, { useState } from "react";
+import updateSheet from "../../../apis/updateSheet";
 import { numberFormat, numberParser } from "../../../utilities/formatter";
 
 const FormLayout = ({ isLoan = false }) => {
   const [data, setData] = useState({});
   const [disableBtn, setDisableBtn] = useState(true);
   const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("access_token");
+  const currentUser = localStorage.getItem("current_user");
 
   const verifyData = (amount = 0, days = 0) => {
     if (isLoan) {
@@ -38,17 +42,62 @@ const FormLayout = ({ isLoan = false }) => {
 
   const handleSubmit = () => {
     setLoading(true);
+
+    if (isLoan) {
+      updateSheet({
+        range: `Loan!A1:C1`,
+        values: [
+          [
+            data?.amount,
+            data?.repayment_days,
+            moment().format("ll"),
+            currentUser,
+          ],
+        ],
+        token: process.env.REACT_APP_GOOGLE_TOKEN || token,
+        spreadsheetId: process.env.REACT_APP_OVERALL_SHEET_ID,
+      });
+    } else {
+      updateSheet({
+        range: `Deposit!A2:B2`,
+        values: [[data?.amount, moment().format("ll"), currentUser]],
+        token: process.env.REACT_APP_GOOGLE_TOKEN || token,
+        spreadsheetId: process.env.REACT_APP_OVERALL_SHEET_ID,
+      });
+    }
+
     setTimeout(() => {
       setLoading(false);
+
       notify();
     }, 1000);
     console.log(data);
   };
   return (
-    <Form>
+    <Form layout="vertical">
+      <Form.Item
+        label="Amount"
+        name="requiredMarkValue"
+        rules={[
+          {
+            required: true,
+            message: "amount is required",
+          },
+        ]}
+      >
+        <InputNumber
+          addonBefore="$"
+          formatter={(value) => numberFormat(value)}
+          parser={(value) => numberParser(value)}
+          placeholder="Eg: 500"
+          min={1}
+          onChange={onChange}
+        />
+      </Form.Item>
       {isLoan && (
         <Form.Item
           label="Repayment Days"
+          name="requiredMarkValue"
           rules={[
             {
               required: true,
@@ -66,24 +115,6 @@ const FormLayout = ({ isLoan = false }) => {
           />
         </Form.Item>
       )}
-      <Form.Item
-        label="Amount"
-        rules={[
-          {
-            required: true,
-            message: "amount is required",
-          },
-        ]}
-      >
-        <InputNumber
-          addonBefore="$"
-          formatter={(value) => numberFormat(value)}
-          parser={(value) => numberParser(value)}
-          placeholder="Eg: 500"
-          min={1}
-          onChange={onChange}
-        />
-      </Form.Item>
       <Form.Item>
         <Button
           type="primary"

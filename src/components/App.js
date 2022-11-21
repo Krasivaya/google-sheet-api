@@ -14,7 +14,7 @@ const protectedRoutes = (routes || []).filter((route) => route?.protected);
 const unprotectedRoutes = (routes || []).filter((route) => !route?.protected);
 
 const App = () => {
-  const isAuthenicated = true;
+  const isAuthenicated = !!localStorage.getItem("access_token");
   return (
     <Router>
       <Routes>
@@ -27,11 +27,11 @@ const App = () => {
             exact
             path={path}
             element={
-              !isAuthenicated ? (
-                <Navigate to="/login" />
-              ) : (
-                <Dashboard childern={component} />
-              )
+              // !localStorage.getItem("access_token") ? (
+              //   <Navigate to="/login" />
+              // ) : (
+              <Dashboard childern={component} />
+              // )
             }
           />
         ))}
