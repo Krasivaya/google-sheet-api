@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "antd/dist/antd.css";
 
 import routes from "../routes";
@@ -14,7 +9,6 @@ const protectedRoutes = (routes || []).filter((route) => route?.protected);
 const unprotectedRoutes = (routes || []).filter((route) => !route?.protected);
 
 const App = () => {
-  const isAuthenicated = !!localStorage.getItem("access_token");
   return (
     <Router>
       <Routes>
@@ -26,13 +20,7 @@ const App = () => {
             key={name}
             exact
             path={path}
-            element={
-              // !localStorage.getItem("access_token") ? (
-              //   <Navigate to="/login" />
-              // ) : (
-              <Dashboard childern={component} />
-              // )
-            }
+            element={<Dashboard childern={component} />}
           />
         ))}
       </Routes>
