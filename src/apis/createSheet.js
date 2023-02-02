@@ -8,7 +8,8 @@ const createSheet = async ({ user, token }) => {
       `https://sheets.googleapis.com/v4/spreadsheets?key=${process.env.REACT_APP_API_KEY}`,
       {
         properties: {
-          title: `${user} (${moment().format("llll")})`,
+          // title: `${user} (${moment().format("llll")})`,
+          title: "Activities",
         },
         sheets: [
           {
