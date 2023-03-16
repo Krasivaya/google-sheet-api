@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const updateSheet = async ({ token, range, values, spreadsheetId }) => {
+const updateSheet = async ({ range, values, spreadsheetId }) => {
   await axios
     .post(
       `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED`,
       { values },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${process.env.REACT_APP_GOOGLE_TOKEN}`,
         },
       }
     )
