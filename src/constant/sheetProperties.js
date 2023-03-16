@@ -20,7 +20,25 @@ export const dataProperties = {
             },
             {
               userEnteredValue: {
-                stringValue: "Issued Date",
+                stringValue: "Receipt Number",
+              },
+              userEnteredFormat: valueFormat,
+            },
+            {
+              userEnteredValue: {
+                stringValue: "Total Savings",
+              },
+              userEnteredFormat: valueFormat,
+            },
+            {
+              userEnteredValue: {
+                stringValue: "Issued At",
+              },
+              userEnteredFormat: valueFormat,
+            },
+            {
+              userEnteredValue: {
+                stringValue: "Issued User",
               },
               userEnteredFormat: valueFormat,
             },
@@ -42,13 +60,49 @@ export const dataProperties = {
             },
             {
               userEnteredValue: {
+                stringValue: "Type",
+              },
+              userEnteredFormat: valueFormat,
+            },
+            {
+              userEnteredValue: {
                 stringValue: "Repayment Days",
               },
               userEnteredFormat: valueFormat,
             },
             {
               userEnteredValue: {
-                stringValue: "Issued Date",
+                stringValue: "Repayment Date",
+              },
+              userEnteredFormat: valueFormat,
+            },
+            {
+              userEnteredValue: {
+                stringValue: "Installment(s)",
+              },
+              userEnteredFormat: valueFormat,
+            },
+            {
+              userEnteredValue: {
+                stringValue: "Loan Balance",
+              },
+              userEnteredFormat: valueFormat,
+            },
+            {
+              userEnteredValue: {
+                stringValue: "Total Loans",
+              },
+              userEnteredFormat: valueFormat,
+            },
+            {
+              userEnteredValue: {
+                stringValue: "Issued At",
+              },
+              userEnteredFormat: valueFormat,
+            },
+            {
+              userEnteredValue: {
+                stringValue: "Issued User",
               },
               userEnteredFormat: valueFormat,
             },
