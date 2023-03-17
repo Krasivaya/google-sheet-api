@@ -7,7 +7,7 @@ import moment from "moment";
 import "./index.scss";
 import { DISCOVERY_DOCS, SCOPES } from "../../constant/gapi";
 import createSheet, { createSheetForUser } from "../../apis/createSheet";
-import { getAllUsers } from "../../apis/getSheet";
+import { getAllUsers, getSheetForUser } from "../../apis/getSheet";
 import updateSheet from "../../apis/updateSheet";
 
 const Login = () => {
@@ -29,7 +29,7 @@ const Login = () => {
       else await createSheetForUser({ user: name, token });
 
       await addLoggedInUser({ name, email });
-    }
+    } else await getUserSheetId({ spreadsheetId, email });
 
     return navigate("/");
   };
@@ -49,13 +49,22 @@ const Login = () => {
   };
 
   const addLoggedInUser = async ({ name, email }) => {
-    const userSpreadsheetId = localStorage.getItem("spreadsheetId");
+    const userSpreadsheetId = localStorage.getItem("spreadsheet_id");
 
     await updateSheet({
       spreadsheetId,
       range: "Users!A2:D2",
       values: [[name, email, userSpreadsheetId, moment().format("lll")]],
     });
+  };
+
+  const getUserSheetId = async ({ spreadsheetId, email }) => {
+    const userSpreadsheetId = await getSheetForUser({
+      spreadsheetId,
+      email,
+      range: "Users!A:D",
+    });
+    localStorage.setItem("spreadsheet_id", userSpreadsheetId);
   };
 
   const updateLocalStorage = ({ token, name, email }) => {

@@ -33,7 +33,7 @@ const createSheet = async ({ token }) => {
       }
     )
     .then((res) =>
-      localStorage.setItem("spreadsheetId", res.data.spreadsheetId)
+      localStorage.setItem("spreadsheet_id", res.data.spreadsheetId)
     )
     .catch((err) => console.log(err));
 };
@@ -70,7 +70,7 @@ export const createSheetForUser = async ({ user, token }) => {
       }
     )
     .then((res) => {
-      localStorage.setItem("spreadsheetId", res.data.spreadsheetId);
+      localStorage.setItem("spreadsheet_id", res.data.spreadsheetId);
       return res;
     })
     .catch((err) => console.log(err));
