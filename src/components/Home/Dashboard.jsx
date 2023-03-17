@@ -18,6 +18,7 @@ const Dashboard = ({ childern }) => {
       localStorage.removeItem("access_token");
       localStorage.removeItem("current_user");
       localStorage.removeItem("current_user_email");
+      localStorage.removeItem("spreadsheet_id");
       return navigate(`/login`);
     }
     return navigate(`/${key}`);
